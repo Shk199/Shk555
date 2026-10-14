@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>المسبحة الإلكترونية</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/app-logo-32.png" />
+  <link rel="icon" type="image/svg+xml" href="/app-logo.svg" />
+  <link rel="apple-touch-icon" href="/app-logo-192.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#111222" />
+</head>
+<body style="margin: 0; background-color: #111222;">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+      });
+    }
+    function getArabicMaleVoice() {
+      if (!('speechSynthesis' in window)) return null;
+      const voices = window.speechSynthesis.getVoices();
+      if (!voices || voices.length === 0) return null;
+
+      // 1. Filter Arabic voices
+      const arabicVoices = voices.filter((v) => {
+        const lang = (v.lang || '').toLowerCase();
+        const name = (v.name || '').toLowerCase();
+        return lang.startsWith('ar') || name.includes('arabic') || name.includes('عربي');
+      });
+
+      if (arabicVoices.length === 0) return null;
+
+      // Helper to check if a voice is explicitly female
+      const isExplicitFemale = (v) => {
+        const name = (v.name || '').toLowerCase();
+        const gender = (v.gender || '').toLowerCase();
+        if (gender === 'female') return true;
+        return /(female|أنثى|laila|layla|mariam|maryam|marium|salma|hoda|zeina|noura|zariyah|zahra|fatima|amina)/i.test(name);
+      };
+
+      // Helper to check if a voice is explicitly male by property or known male names/keywords
+      const isExplicitMale = (v) => {
+        const name = (v.name || '').toLowerCase();
+        const gender = (v.gender || '').toLowerCase();
+        if (gender === 'male') return true;
+        return /(male|ذكر|majed|ماجد|tariq|tarik|naif|نايف|salman|سلمان|hassan|حسن|ali|علي|ar-xa-x-ard|ar-xa-x-arc|wavenet-b|wavenet-c|wavenet-d|standard-b|standard-c|standard-d)/i.test(name);
+      };
+
+      // Priority 1: Google Arabic Male voice
+      const googleMaleVoice = arabicVoices.find((v) => {
+        const name = (v.name || '').toLowerCase();
+        return name.includes('google') && isExplicitMale(v) && !isExplicitFemale(v);
+      });
+      if (googleMaleVoice) return googleMaleVoice;
+
+      // Priority 2: Any other Arabic voice that looks/is male by name or gender (e.g. Apple Majed)
+      const anyOtherMaleVoice = arabicVoices.find((v) => isExplicitMale(v) && !isExplicitFemale(v));
+      if (anyOtherMaleVoice) return anyOtherMaleVoice;
+
+      // Priority 2.5: Google Arabic voice not explicitly female
+      const googleNonFemaleVoice = arabicVoices.find((v) => {
+        const name = (v.name || '').toLowerCase();
+        return name.includes('google') && !isExplicitFemale(v);
+      });
+      if (googleNonFemaleVoice) return googleNonFemaleVoice;
+
+      // Priority 3: Any Arabic voice that is not explicitly female
+      const nonFemaleVoice = arabicVoices.find((v) => !isExplicitFemale(v));
+      if (nonFemaleVoice) return nonFemaleVoice;
+
+      // Priority 4 / Fallback: Any available Arabic voice regardless of gender
+      return arabicVoices[0];
+    }
+
+    window.playMorningEveningAlert = function(isMorning) {
+      if ('speechSynthesis' in window) {
+        const text = isMorning ? 'حان وقت أذكار الصباح' : 'حان وقت أذكار المساء';
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ar-SA';
+
+        const selectedVoice = getArabicMaleVoice();
+        if (selectedVoice) {
+          utterance.voice = selectedVoice;
+        }
+
+        utterance.pitch = 0.92;
+        utterance.rate = 0.95;
+
+        // Print selected voice name in console.log for development/verification
+        console.log('[WebSpeech] Selected voice for Morning/Evening reminder:', selectedVoice ? `${selectedVoice.name} (${selectedVoice.lang || 'ar'})` : 'Default System Voice (ar-SA)');
+
+        window.speechSynthesis.speak(utterance);
+      }
+    };
+
+    // Apply the same male voice logic if Salawat or any other speech is invoked via Web Speech API
+    window.playSalawatSpeechAlert = function() {
+      if ('speechSynthesis' in window) {
+        const text = 'اللهم صل وسلم على نبينا محمد';
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ar-SA';
+
+        const selectedVoice = getArabicMaleVoice();
+        if (selectedVoice) {
+          utterance.voice = selectedVoice;
+        }
+
+        utterance.pitch = 0.92;
+        utterance.rate = 0.95;
+
+        console.log('[WebSpeech] Selected voice for Salawat reminder:', selectedVoice ? `${selectedVoice.name} (${selectedVoice.lang || 'ar'})` : 'Default System Voice (ar-SA)');
+
+        window.speechSynthesis.speak(utterance);
+      }
+    };
+  </script>
+</body>
+</html>

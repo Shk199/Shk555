@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="42%" r="65%">
+      <stop offset="0%" stop-color="#181230" />
+      <stop offset="60%" stop-color="#0F0C1E" />
+      <stop offset="100%" stop-color="#080611" />
+    </radialGradient>
+
+    <!-- Central Outer Glow -->
+    <radialGradient id="outerAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.4" />
+      <stop offset="70%" stop-color="#6D28D9" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#6D28D9" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Central Disc Gradient -->
+    <radialGradient id="centerDisc" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#9D5CFA" />
+      <stop offset="40%" stop-color="#7C3AED" />
+      <stop offset="75%" stop-color="#5B21B6" />
+      <stop offset="100%" stop-color="#37136B" />
+    </radialGradient>
+
+    <!-- Bead Sphere Gradient -->
+    <radialGradient id="beadGrad" cx="35%" cy="32%" r="65%">
+      <stop offset="0%" stop-color="#F3EEFF" />
+      <stop offset="25%" stop-color="#DDD6FE" />
+      <stop offset="55%" stop-color="#A78BFA" />
+      <stop offset="85%" stop-color="#6D28D9" />
+      <stop offset="100%" stop-color="#3B0764" />
+    </radialGradient>
+
+    <!-- Leader Bead (Top) Gradient -->
+    <radialGradient id="leaderBeadGrad" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="30%" stop-color="#E9D5FF" />
+      <stop offset="60%" stop-color="#B794F6" />
+      <stop offset="85%" stop-color="#7C3AED" />
+      <stop offset="100%" stop-color="#3B0764" />
+    </radialGradient>
+
+    <!-- Star Glow -->
+    <radialGradient id="starGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="40%" stop-color="#E9D5FF" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Moon Rim Shadow/Glow -->
+    <linearGradient id="moonFill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181329" />
+      <stop offset="100%" stop-color="#0D0A18" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background squircle -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+
+  <!-- Outer connecting thread -->
+  <circle cx="256" cy="256" r="182" fill="none" stroke="#4C2D80" stroke-width="2.5" opacity="0.7" />
+
+  <!-- Beads -->
+  <circle cx="256.00" cy="76.00" r="16" fill="#080512" opacity="0.6" />
+    <circle cx="290.44" cy="79.29" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="323.64" cy="89.04" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="354.40" cy="104.89" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="381.59" cy="126.28" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="404.25" cy="152.43" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="421.55" cy="182.39" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="432.87" cy="215.09" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="437.79" cy="249.34" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="436.15" cy="283.90" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="427.99" cy="317.53" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="413.62" cy="349.00" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="393.55" cy="377.18" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="368.50" cy="401.06" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="339.40" cy="419.77" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="307.28" cy="432.63" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="273.30" cy="439.18" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="238.70" cy="439.18" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="204.72" cy="432.63" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="172.60" cy="419.77" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="143.50" cy="401.06" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="118.45" cy="377.18" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="98.38" cy="349.00" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="84.01" cy="317.53" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="75.85" cy="283.90" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="74.21" cy="249.34" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="79.13" cy="215.09" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="90.45" cy="182.39" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="107.75" cy="152.43" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="130.41" cy="126.28" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="157.60" cy="104.89" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="188.36" cy="89.04" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="221.56" cy="79.29" r="10.5" fill="#080512" opacity="0.6" />
+    <circle cx="256.00" cy="74.00" r="15" fill="url(#leaderBeadGrad)" />
+    <circle cx="290.44" cy="77.29" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="323.64" cy="87.04" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="354.40" cy="102.89" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="381.59" cy="124.28" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="404.25" cy="150.43" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="421.55" cy="180.39" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="432.87" cy="213.09" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="437.79" cy="247.34" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="436.15" cy="281.90" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="427.99" cy="315.53" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="413.62" cy="347.00" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="393.55" cy="375.18" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="368.50" cy="399.06" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="339.40" cy="417.77" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="307.28" cy="430.63" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="273.30" cy="437.18" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="238.70" cy="437.18" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="204.72" cy="430.63" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="172.60" cy="417.77" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="143.50" cy="399.06" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="118.45" cy="375.18" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="98.38" cy="347.00" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="84.01" cy="315.53" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="75.85" cy="281.90" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="74.21" cy="247.34" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="79.13" cy="213.09" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="90.45" cy="180.39" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="107.75" cy="150.43" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="130.41" cy="124.28" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="157.60" cy="102.89" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="188.36" cy="87.04" r="9.5" fill="url(#beadGrad)" />
+    <circle cx="221.56" cy="77.29" r="9.5" fill="url(#beadGrad)" />
+
+  <!-- Center Glowing Disc Aura -->
+  <circle cx="256" cy="256" r="142" fill="url(#outerAura)" />
+
+  <!-- Center Disc -->
+  <circle cx="256" cy="256" r="116" fill="url(#centerDisc)" stroke="#C4B5FD" stroke-width="1.5" stroke-opacity="0.4" />
+
+  <!-- Crescent Moon -->
+  <path d="M 248,172 A 84,84 0 1,0 248,340 A 74,74 0 1,1 248,172 Z"
+        fill="url(#moonFill)" />
+
+  <!-- Moon rim highlight -->
+  <path d="M 248,172 A 84,84 0 0,0 178,256"
+        fill="none" stroke="#8B5CF6" stroke-width="2" stroke-opacity="0.5" />
+
+  <!-- Star / White Pearl -->
+  <circle cx="328" cy="194" r="14" fill="url(#starGlow)" />
+  <circle cx="328" cy="194" r="6" fill="#FFFFFF" />
+</svg>
