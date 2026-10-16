@@ -18,6 +18,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check secrets are visible (prints true/false only, never the values)
+        run: |
+          echo "KEYSTORE_B64 set: ${{ env.KEYSTORE_B64 != '' }}"
+          echo "STORE_PASSWORD set: ${{ env.STORE_PASSWORD != '' }}"
+          echo "KEY_PASSWORD set: ${{ env.KEY_PASSWORD != '' }}"
+          echo "KEY_ALIAS set: ${{ env.KEY_ALIAS != '' }}"
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
