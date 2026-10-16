@@ -1,7 +1,6 @@
 package com.example.reminder
 
 import android.Manifest
-import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,36 +11,6 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 
 object ReminderPermissionHelper {
-
-    /**
-     * Checks if the app can schedule exact alarms (Android 12+ / API 31).
-     * On earlier versions, exact alarms do not require user-granted permission.
-     */
-    fun canScheduleExactAlarms(context: Context): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-            alarmManager?.canScheduleExactAlarms() ?: true
-        } else {
-            true
-        }
-    }
-
-    /**
-     * Opens system screen to allow exact alarms permission for this app.
-     */
-    fun openExactAlarmSettings(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            try {
-                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
-                    data = Uri.parse("package:${context.packageName}")
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-                context.startActivity(intent)
-            } catch (e: Exception) {
-                openAppDetailsSettings(context)
-            }
-        }
-    }
 
     /**
      * Checks if notification permission is granted (Android 13+ / API 33).

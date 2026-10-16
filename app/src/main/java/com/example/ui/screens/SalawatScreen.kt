@@ -63,7 +63,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.R
 import com.example.reminder.ReminderPermissionHelper
 import com.example.reminder.SalawatAudioPlayer
-import com.example.ui.components.ExactAlarmPermissionDialog
 import com.example.ui.components.NotificationDeniedDialog
 import com.example.ui.theme.AccentGold
 import com.example.ui.theme.AppBackground
@@ -101,21 +100,13 @@ fun SalawatScreen(
         return String.format("%02d:%02d", min, sec)
     }
 
-    var showExactAlarmDialog by remember { mutableStateOf(false) }
     var showNotificationDeniedDialog by remember { mutableStateOf(false) }
-
-    fun checkAuxiliaryPermissions() {
-        if (!ReminderPermissionHelper.canScheduleExactAlarms(context)) {
-            showExactAlarmDialog = true
-        }
-    }
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
             onToggleSalawat(true)
-            checkAuxiliaryPermissions()
         } else {
             showNotificationDeniedDialog = true
         }
@@ -129,7 +120,6 @@ fun SalawatScreen(
                 permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             } else {
                 onToggleSalawat(true)
-                checkAuxiliaryPermissions()
             }
         } else {
             onToggleSalawat(false)
@@ -638,13 +628,6 @@ fun SalawatScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
         }
-    }
-
-    if (showExactAlarmDialog) {
-        ExactAlarmPermissionDialog(
-            onDismiss = { showExactAlarmDialog = false },
-            context = context
-        )
     }
 
     if (showNotificationDeniedDialog) {

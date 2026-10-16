@@ -57,51 +57,21 @@ object SalawatScheduler {
         val triggerTime = SystemClock.elapsedRealtime() + intervalMinutes * 60 * 1000L
 
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                if (alarmManager.canScheduleExactAlarms()) {
-                    alarmManager.setExactAndAllowWhileIdle(
-                        AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                        triggerTime,
-                        pendingIntent
-                    )
-                } else {
-                    alarmManager.setAndAllowWhileIdle(
-                        AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                        triggerTime,
-                        pendingIntent
-                    )
-                }
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setExactAndAllowWhileIdle(
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setAndAllowWhileIdle(
                     AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     triggerTime,
                     pendingIntent
                 )
             } else {
-                alarmManager.setExact(
+                alarmManager.set(
                     AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     triggerTime,
                     pendingIntent
                 )
             }
-        } catch (e: SecurityException) {
-            try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    alarmManager.setAndAllowWhileIdle(
-                        AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                        triggerTime,
-                        pendingIntent
-                    )
-                } else {
-                    alarmManager.set(
-                        AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                        triggerTime,
-                        pendingIntent
-                    )
-                }
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

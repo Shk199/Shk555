@@ -75,7 +75,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bubble.SmartTasbeehManager
 import com.example.reminder.ReminderPermissionHelper
-import com.example.ui.components.ExactAlarmPermissionDialog
 import com.example.ui.components.NotificationDeniedDialog
 import com.example.data.model.DailyStat
 import com.example.data.model.DhikrItem
@@ -598,21 +597,13 @@ private fun SalawatReminderSubScreen(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    var showExactAlarmDialog by remember { mutableStateOf(false) }
     var showNotificationDeniedDialog by remember { mutableStateOf(false) }
-
-    fun checkAuxiliaryPermissions() {
-        if (!ReminderPermissionHelper.canScheduleExactAlarms(context)) {
-            showExactAlarmDialog = true
-        }
-    }
 
     val notificationLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
             onToggle(true)
-            checkAuxiliaryPermissions()
         } else {
             showNotificationDeniedDialog = true
         }
@@ -697,7 +688,6 @@ private fun SalawatReminderSubScreen(
                                         notificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                                     } else {
                                         onToggle(true)
-                                        checkAuxiliaryPermissions()
                                     }
                                 } else {
                                     onToggle(false)
@@ -898,13 +888,6 @@ private fun SalawatReminderSubScreen(
         Spacer(modifier = Modifier.height(30.dp))
     }
 
-    if (showExactAlarmDialog) {
-        ExactAlarmPermissionDialog(
-            onDismiss = { showExactAlarmDialog = false },
-            context = context
-        )
-    }
-
     if (showNotificationDeniedDialog) {
         NotificationDeniedDialog(
             onDismiss = { showNotificationDeniedDialog = false },
@@ -934,21 +917,13 @@ private fun MorningEveningReminderSubScreen(
     val eveningFormatted = String.format("%02d:%02d", eveningHour, eveningMinute)
 
     val context = LocalContext.current
-    var showExactAlarmDialog by remember { mutableStateOf(false) }
     var showNotificationDeniedDialog by remember { mutableStateOf(false) }
-
-    fun checkAuxiliaryPermissions() {
-        if (!ReminderPermissionHelper.canScheduleExactAlarms(context)) {
-            showExactAlarmDialog = true
-        }
-    }
 
     val notificationLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
             onToggle(true)
-            checkAuxiliaryPermissions()
         } else {
             showNotificationDeniedDialog = true
         }
@@ -1034,7 +1009,6 @@ private fun MorningEveningReminderSubScreen(
                                     notificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                                 } else {
                                     onToggle(true)
-                                    checkAuxiliaryPermissions()
                                 }
                             } else {
                                 onToggle(false)
@@ -1267,13 +1241,6 @@ private fun MorningEveningReminderSubScreen(
         }
 
         Spacer(modifier = Modifier.height(30.dp))
-    }
-
-    if (showExactAlarmDialog) {
-        ExactAlarmPermissionDialog(
-            onDismiss = { showExactAlarmDialog = false },
-            context = context
-        )
     }
 
     if (showNotificationDeniedDialog) {
