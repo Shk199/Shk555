@@ -1,0 +1,67 @@
+name: Build Android
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # Optional release-signing secrets (see instructions). Without them only the debug APK is built.
+      KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
+      STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: android-actions/setup-android@v3
+
+      # gradlew / gradle-wrapper.jar are missing from the repo, so use the Gradle version the project asks for
+      - name: Read Gradle version
+        id: gv
+        run: |
+          V=$(grep distributionUrl gradle/wrapper/gradle-wrapper.properties | sed -E 's/.*gradle-([0-9.]+)-(bin|all).*/\1/')
+          echo "version=$V" >> "$GITHUB_OUTPUT"
+          echo "Gradle version: $V"
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: ${{ steps.gv.outputs.version }}
+
+      # debug.keystore is git-ignored, but app/build.gradle.kts requires it
+      - name: Create debug.keystore
+        run: |
+          keytool -genkeypair -v -keystore debug.keystore -storepass android \
+            -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 \
+            -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+
+      - name: Build debug APK
+        run: gradle assembleDebug --stacktrace
+
+      - name: Restore release keystore
+        if: env.KEYSTORE_B64 != ''
+        run: |
+          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.jks"
+          echo "KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+
+      - name: Build signed release AAB and APK
+        if: env.KEYSTORE_B64 != ''
+        run: gradle bundleRelease assembleRelease --stacktrace
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-outputs
+          if-no-files-found: warn
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/bundle/release/*.aab
