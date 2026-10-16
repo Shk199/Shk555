@@ -62,6 +62,10 @@ jobs:
           echo "$KEYSTORE_B64" | tr -d ' \r\n' | base64 -d > "$RUNNER_TEMP/release.jks"
           echo "KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
 
+      - name: Verify release keystore
+        if: env.KEYSTORE_B64 != ''
+        run: keytool -list -keystore "$KEYSTORE_PATH" -storepass "$STORE_PASSWORD" -alias "$KEY_ALIAS" | head -3
+
       - name: Build signed release AAB and APK
         if: env.KEYSTORE_B64 != ''
         run: gradle bundleRelease assembleRelease --stacktrace
